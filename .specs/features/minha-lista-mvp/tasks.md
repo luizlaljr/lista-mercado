@@ -7,7 +7,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/minha-lista-mvp/design.md`
-**Status**: In Progress
+**Status**: Done
 
 ---
 
@@ -77,9 +77,9 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] `npm install` succeeds.
-- [ ] App shell compiles.
-- [ ] `npm run build` passes.
+- [x] `npm install` succeeds.
+- [x] App shell compiles.
+- [x] `npm run build` passes.
 
 **Tests**: none
 **Gate**: build
@@ -96,8 +96,8 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] Types export all MVP fields.
-- [ ] TypeScript build sees the exports.
+- [x] Types export all MVP fields.
+- [x] TypeScript build sees the exports.
 
 **Tests**: none
 **Gate**: build
@@ -114,9 +114,9 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] Helpers satisfy mapped acceptance criteria.
-- [ ] Unit tests cover category, progress, creation, and validation branches.
-- [ ] `npm run test` passes.
+- [x] Helpers satisfy mapped acceptance criteria.
+- [x] Unit tests cover category, progress, creation, and validation branches.
+- [x] `npm run test` passes.
 
 **Tests**: unit
 **Gate**: quick
@@ -133,10 +133,10 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] Valid saved lists restore.
-- [ ] Invalid JSON restores as empty list.
-- [ ] Save writes serialized items.
-- [ ] `npm run test` passes.
+- [x] Valid saved lists restore.
+- [x] Invalid JSON restores as empty list.
+- [x] Save writes serialized items.
+- [x] `npm run test` passes.
 
 **Tests**: unit
 **Gate**: quick
@@ -153,10 +153,10 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] User can add custom and suggested items.
-- [ ] User can toggle, delete, clear completed, and start a new list.
-- [ ] Progress and empty states update immediately.
-- [ ] `npm run build` passes.
+- [x] User can add custom and suggested items.
+- [x] User can toggle, delete, clear completed, and start a new list.
+- [x] Progress and empty states update immediately.
+- [x] `npm run build` passes.
 
 **Tests**: none
 **Gate**: build
@@ -173,8 +173,8 @@ T4 -> T5 -> T6
 
 **Done when**:
 
-- [ ] `npm run test && npm run build` passes.
-- [ ] Validation report maps evidence to acceptance criteria.
+- [x] `npm run test && npm run build` passes.
+- [x] Validation report maps evidence to acceptance criteria.
 
 **Tests**: unit + build
 **Gate**: full

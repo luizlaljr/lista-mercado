@@ -105,21 +105,21 @@ Users need a fast mobile-first grocery list that is easier than writing items in
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| LIST-01 | P1 active screen | Design | Pending |
-| LIST-02 | P1 add custom item | Design | Pending |
-| LIST-03 | P1 validation | Design | Pending |
-| LIST-04 | P1 quick suggestion | Design | Pending |
-| LIST-05 | P1 toggle bought/unbought | Design | Pending |
-| LIST-06 | P1 delete item | Design | Pending |
-| LIST-07 | P1 remove bought | Design | Pending |
-| LIST-08 | P1 new list | Design | Pending |
-| LIST-09 | P1 localStorage restore | Design | Pending |
-| CAT-01 | P2 known categories | Design | Pending |
-| CAT-02 | P2 fallback category | Design | Pending |
-| CAT-03 | P2 case/accent-insensitive matching | Design | Pending |
-| UI-01 | P2 360 px responsive layout | Design | Pending |
-| UI-02 | P2 touch-friendly controls | Design | Pending |
-| UI-03 | P2 desktop readable layout | Design | Pending |
+| LIST-01 | P1 active screen | Validation | Verified |
+| LIST-02 | P1 add custom item | Validation | Verified |
+| LIST-03 | P1 validation | Validation | Verified |
+| LIST-04 | P1 quick suggestion | Validation | Verified |
+| LIST-05 | P1 toggle bought/unbought | Validation | Verified |
+| LIST-06 | P1 delete item | Validation | Verified |
+| LIST-07 | P1 remove bought | Validation | Verified |
+| LIST-08 | P1 new list | Validation | Verified |
+| LIST-09 | P1 localStorage restore | Validation | Verified |
+| CAT-01 | P2 known categories | Validation | Verified |
+| CAT-02 | P2 fallback category | Validation | Verified |
+| CAT-03 | P2 case/accent-insensitive matching | Validation | Verified |
+| UI-01 | P2 360 px responsive layout | Validation | Verified |
+| UI-02 | P2 touch-friendly controls | Validation | Verified |
+| UI-03 | P2 desktop readable layout | Validation | Verified |
 
 **Coverage:** 15 total, 15 mapped to tasks, 0 unmapped.
 
