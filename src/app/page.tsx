@@ -16,8 +16,19 @@ import {
   QUICK_SUGGESTIONS,
   validateProductName,
 } from "@/lib/shopping-list"
-import { loadShoppingItems, saveShoppingItems } from "@/lib/storage"
-import type { ShoppingItem } from "@/lib/types"
+import {
+  loadShoppingItems,
+  loadSuggestionHistory,
+  loadSuggestionOrder,
+  saveShoppingItems,
+  saveSuggestionHistory,
+  saveSuggestionOrder,
+} from "@/lib/storage"
+import {
+  buildSuggestionHistory,
+  getQuickSuggestions,
+} from "@/lib/suggestions"
+import type { ProductSuggestionStat, ShoppingItem } from "@/lib/types"
 
 function formatToday(): string {
   return new Intl.DateTimeFormat("pt-BR", {
@@ -34,18 +45,70 @@ function reorderItems(items: ShoppingItem[]): ShoppingItem[] {
   }))
 }
 
+function getRandomIndex(maxExclusive: number): number {
+  if (window.crypto?.getRandomValues) {
+    const values = new Uint32Array(1)
+    window.crypto.getRandomValues(values)
+    return values[0] % maxExclusive
+  }
+
+  return Math.floor(Math.random() * maxExclusive)
+}
+
+function shuffleSuggestions(suggestions: readonly string[]): string[] {
+  const shuffled = [...suggestions]
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = getRandomIndex(index + 1)
+    const current = shuffled[index]
+    shuffled[index] = shuffled[swapIndex]
+    shuffled[swapIndex] = current
+  }
+
+  return shuffled
+}
+
 export default function Home() {
   const [items, setItems] = useState<ShoppingItem[]>([])
+  const [initialSuggestionOrder, setInitialSuggestionOrder] = useState<string[]>([
+    ...QUICK_SUGGESTIONS,
+  ])
+  const [suggestionHistory, setSuggestionHistory] = useState<
+    ProductSuggestionStat[]
+  >([])
   const [name, setName] = useState("")
   const [quantity, setQuantity] = useState("1 un")
   const [error, setError] = useState<string | null>(null)
   const [hasLoaded, setHasLoaded] = useState(false)
 
   const progress = useMemo(() => calculateProgress(items), [items])
+  const suggestions = useMemo(
+    () =>
+      getQuickSuggestions({
+        history: suggestionHistory,
+        initialOrder: initialSuggestionOrder,
+        defaults: QUICK_SUGGESTIONS,
+        limit: QUICK_SUGGESTIONS.length,
+      }),
+    [initialSuggestionOrder, suggestionHistory],
+  )
   const remainingItems = progress.total - progress.completed
 
   useEffect(() => {
     setItems(loadShoppingItems(window.localStorage))
+
+    const savedSuggestionOrder = loadSuggestionOrder(window.localStorage)
+    const nextSuggestionOrder =
+      savedSuggestionOrder.length > 0
+        ? savedSuggestionOrder
+        : shuffleSuggestions(QUICK_SUGGESTIONS)
+
+    if (savedSuggestionOrder.length === 0) {
+      saveSuggestionOrder(window.localStorage, nextSuggestionOrder)
+    }
+
+    setInitialSuggestionOrder(nextSuggestionOrder)
+    setSuggestionHistory(loadSuggestionHistory(window.localStorage))
     setHasLoaded(true)
   }, [])
 
@@ -54,6 +117,12 @@ export default function Home() {
       saveShoppingItems(window.localStorage, items)
     }
   }, [hasLoaded, items])
+
+  useEffect(() => {
+    if (hasLoaded) {
+      saveSuggestionHistory(window.localStorage, suggestionHistory)
+    }
+  }, [hasLoaded, suggestionHistory])
 
   function addItem(productName: string, productQuantity: string) {
     const validation = validateProductName(productName)
@@ -72,6 +141,9 @@ export default function Home() {
     )
 
     setItems((currentItems) => reorderItems([nextItem, ...currentItems]))
+    setSuggestionHistory((currentHistory) =>
+      buildSuggestionHistory(currentHistory, nextItem.name, now),
+    )
     setName("")
     setQuantity("1 un")
     setError(null)
@@ -205,7 +277,7 @@ export default function Home() {
 
           <section className="mt-5" aria-label="Sugestões rápidas">
             <div className="flex gap-2 overflow-x-auto pb-2">
-              {QUICK_SUGGESTIONS.map((suggestion) => (
+              {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"

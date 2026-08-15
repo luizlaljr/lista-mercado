@@ -24,3 +24,10 @@ export interface ShoppingProgress {
   total: number
   percentage: number
 }
+
+export interface ProductSuggestionStat {
+  key: string
+  name: string
+  count: number
+  lastUsedAt: string
+}
